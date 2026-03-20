@@ -3,4 +3,4 @@ Aimed to be the enhancement for the Fabric in a day from
 
 Enhanced with the latest Microsoft Fabric interfaces, updated step-by-step with relevant names of the Fabric items and features.
 
-Access the "**Instructions**" folder for the training
+Access the "**Labs**" folder for the training
