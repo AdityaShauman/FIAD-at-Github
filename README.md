@@ -1,6 +1,7 @@
-Aimed to be the enhancement for the Fabric in a day from  
+Aimed to be the enhancement for the Fabric in a Day from  
 [https://github.com/dereknguyenio/microsoft-fabric-in-a-day/](https://github.com/dereknguyenio/microsoft-fabric-in-a-day/)
 
-Enhanced with the latest Microsoft Fabric interfaces, updated step-by-step with relevant names of the Fabric items and features.
+Enhanced with screen capture of the latest Microsoft Fabric interface,   
+Updated step-by-step with relevant names of items and features according to the latest Microsoft Fabric.
 
-Access the "**Labs**" folder for the training
+For the Fabric in a Day training refer to the "**Labs**" folder/directory
