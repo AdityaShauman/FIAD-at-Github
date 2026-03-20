@@ -1,0 +1,136 @@
+---
+Lab:
+    Title: 'Get started with Real-Time Analytics in Microsoft Fabric'
+    Module: 'Get started with real-time analytics in Microsoft Fabric'
+---
+
+# Get started with Real-Time Analytics in Microsoft Fabric
+
+Microsoft Fabric provides a runtime that you can use to store and query data by using Kusto Query Language (KQL). Kusto is optimized for data that includes a time series component, such as real-time data from log files or IoT devices.
+
+This lab takes approximately **30** minutes to complete.
+
+> **Note**: You'll need a Microsoft Fabric license to complete this exercise. See [Getting started with Fabric](https://learn.microsoft.com/fabric/get-started/fabric-trial) for details of how to enable a free Fabric trial license. You will need a Microsoft *school* or *work* account to do this. If you don't have one, you can [sign up for a trial of Microsoft Office 365 E3 or higher](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans).
+
+## Table of Contents
+
+- [A. Create a workspace](#a-create-a-workspace)
+- [B. Download file for KQL database](#b-download-file-for-kql-database)
+- [C. Create a KQL database](#c-create-a-kql-database)
+- [D. Use KQL to query the sales table](#d-use-kql-to-query-the-sales-table)
+- [E. Create a Power BI report from a KQL Queryset](#e-create-a-power-bi-report-from-a-kql-queryset)
+- [F. Clean up resources (Optional)](#f-clean-up-resources-optional)
+
+## A. Create a workspace
+
+Before working with data in Fabric, create a workspace with the Fabric trial enabled.
+
+1. Sign into [Microsoft Fabric](https://app.fabric.microsoft.com) at `https://app.fabric.microsoft.com` and select **Power BI**.
+2. In the menu bar on the left, select **Workspaces** (the icon looks similar to &#128455;).
+3. Create a new workspace with a name of your choice, selecting a licensing mode that includes Fabric capacity (*Trial*, *Premium*, or *Fabric*).
+4. When your new workspace opens, it should be empty, as shown here:
+
+    ![Screenshot of an empty workspace in Power BI.](./Images/new-workspace.png)
+
+5. If in the bottom left it's still showing Power BI, select the **Power BI** icon and switch to the **Microsoft Fabric** experience.
+
+## B. Download file for KQL database
+
+Now that you have a workspace, it's time to switch to the *Synapse Real-Time Analytics* experience in the portal and download the data file you're going to analyze.
+
+1. Download the data file for this exercise from [https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/sales.csv](https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/sales.csv), saving it as **sales.csv** on your local computer (or lab VM if applicable)
+2. Return to browser window with **Microsoft Fabric** Experience.
+
+## C. Create a KQL database
+
+Kusto query language (KQL) is used to query static or streaming data in a table that is defined in a KQL database. To analyze the sales data, you must create a table in a KQL database and ingest the data from the file.
+
+1. Before you can create a KQL database, you will need an Eventhouse, navigate to the **Microsoft Fabric** workspace. 
+2. On the **Fabric** view page for the, select **+ New Item** and find **Eventhouse**, provide a preferred name.
+3. When the new **Eventhouse** has been created, in the left pane navigate and select the auto-created KQL database, select **Get Data**, and choose the option of **Local File**. Then use the wizard to import the data into a new table by selecting the following options:
+    - **Source**:
+        - **Table**: *Create a new table named* **sales**.
+    - **Configure**:
+        - **Source type**: File
+        - **Upload files**: *Drag or Browse for the file you downloaded earlier*
+    - **Inspect**:
+        - **First row header**: *Selected*
+        - **Data format**: CSV
+        - **Mapping name**: sales_mapping
+    - **Summary**:
+        - *Explore or simply close the wizard.*
+
+> **Note**: In this example, you imported a very small amount of static data from a file, which is fine for the purposes of this exercise. In reality, you can use Kusto to analyze much larger volumes of data; including real-time data from a streaming source such as Azure Event Hubs.
+
+## D. Use KQL to query the sales table
+
+Now that you have a table of data in your database, you can use KQL code to query it.
+
+1. Make sure you have the **sales** table highlighted. From the menu bar, select the **Query with code** drop-down, and from there select **Show any 100 records** .
+
+2. A new pane will open with the query and its result. 
+
+3. Modify the query as follows:
+
+    ```kusto
+   sales
+   | where Item == 'Road-250 Black, 48'
+    ```
+
+4. Run the query. Then review the results, which should contain only the rows for sales orders for the *Road-250 Black, 48* product.
+
+5. Modify the query as follows:
+
+    ```kusto
+   sales
+   | where Item == 'Road-250 Black, 48'
+   | where datetime_part('year', OrderDate) > 2020
+    ```
+
+6. Run the query and review the results, which should contain only sales orders for *Road-250 Black, 48* made after 2020.
+
+7. Modify the query as follows:
+
+    ```kusto
+   sales
+   | where OrderDate between (datetime(2020-01-01 00:00:00) .. datetime(2020-12-31 23:59:59))
+   | summarize TotalNetRevenue = sum(UnitPrice) by Item
+   | sort by Item asc
+    ```
+
+8. Run the query and review the results, which should contain the total net revenue for each product between January 1st and December 31st 2020 in ascending order of product name.
+<!-- 9. Select **Save as KQL queryset** and save the query as **Revenue by Product**. -->
+
+## E. Create a Power BI report from a KQL Queryset
+
+You can use your KQL Queryset as the basis for a Power BI report.
+
+1. Still in same view of the KQL Queryset that you ran earlier, or if you closed it, repeat the above process up to the code (point 7):
+    ```kusto
+   sales
+   | where OrderDate between (datetime(2020-01-01 00:00:00) .. datetime(2020-12-31 23:59:59))
+   | summarize TotalNetRevenue = sum(UnitPrice) by Item
+   | sort by Item asc
+    ```
+2. From the Queryset menu ribbon, select **Create Power BI report** (some display maybe cropped, there will be an option to click **More** to expand the ribbon), wait for the report editor to open.
+3. In the report editor, in the **Data** pane, expand **Kusto Query Result** and select the **Item** and **TotalRevenue** fields.
+4. On the report design canvas, select the table visualization that has been added, change the table by selecting **Clustered bar chart** in the **Visualizations** pane.
+
+    ![Screenshot of a report from a KQL query.](./Images/kql-report.png)
+
+5. In the **Power BI** window, in the **File** menu, select **Save**. Then save the report with your desired name in the workspace where your lakehouse and KQL database are.
+6. Close the **Power BI** window, and from the bar on the left, return to your workspace.
+
+    Refresh the Workspace page if necessary to view all of the items it contains.
+
+7. In the list of items in your workspace, note that the PBI report alongside the Semantic model are listed.
+
+## F. Clean up resources (Optional)
+
+In this exercise, you have created a lakehouse, a KQL database to analyze the data uploaded into the lakehouse. You used KQL to query the data and create a query set, which was then used to create a Power BI report.
+
+If you've finished exploring your KQL database, you can delete the workspace you created for this exercise.
+
+1. In the bar on the left, select the icon for your workspace.
+2. In the **...** menu on the toolbar, select **Workspace settings**.
+3. In the **Other** section, select **Remove this workspace**.
