@@ -1,6 +1,6 @@
 ---
 Lab:
-    Title: 'Create a Microsoft Fabric Lakehouse'
+    Title: 'Microsoft Fabric Lakehouse'
     Module: 'Get started with lakehouses in Microsoft Fabric'
 ---
 
