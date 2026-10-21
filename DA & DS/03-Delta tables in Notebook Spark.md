@@ -146,7 +146,7 @@ Let's explore the differences between managed and external tables.
    %%sql
 
    DROP TABLE <Lakehouse_Name>.<Name>_<Role>.managed_products;
-   DROP TABLE <Lakehouse_Name>.<Name>_<Role>.external_products;
+   DROP TABLE external_products;
     ```
 
 4. In the **Lakehouse explorer** pane, in the **...** menu for your schema, select **Refresh**. Then expand your schema and verify that the **managed_products** and **external_products** tables are no longer listed.
