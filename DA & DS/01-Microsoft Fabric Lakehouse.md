@@ -23,7 +23,7 @@ This lab takes approximately **30** minutes to complete.
 
 > **Important – shared environment**: In this workshop all participants work in **one shared workspace and one shared lakehouse**, and the data has already been loaded for you into the **`scenario1`** schema, which is the same for everyone. To avoid overwriting each other's work, every item you create in the workspace (such as semantic models and reports) must carry your own identifier in the format **`<Name>_<Role>`** (for example `Budi_DataAnalyst`). You will reuse the same identifier in the following modules.
 
-## A. Open the shared lakehouse SQL analytics endpoint
+## A. Open the shared lakehouse
 
 1. Sign into [Microsoft Fabric](https://app.fabric.microsoft.com) at `https://app.fabric.microsoft.com`.
 2. At the bottom left, ensure that you have the **Fabric** icon, if it's still in **Power BI** icon, simply click and switch to the **Fabric** icon. If you do not see the **Fabric** icon, contact your Fabric administrator with a request to [enable Fabric](https://learn.microsoft.com/fabric/admin/fabric-switch).
