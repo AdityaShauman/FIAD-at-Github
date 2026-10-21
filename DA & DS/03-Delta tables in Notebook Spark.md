@@ -96,7 +96,7 @@ You can also create *external* tables for which the schema metadata is defined i
 1. Add another new code cell, and add the following code to it (DO NOT RUN THE CODE FIRST):
 
     ```python
-   df.write.format("delta").saveAsTable("<Lakehouse_Name>.<Name>_<Role>.external_products", path="<abfs_path>/external_products")
+   df.write.format("delta").saveAsTable("external_products", path="<abfs_path>/external_products")
     ```
 
 2. Go to the **Lakehouse explorer** pane, in the **...** menu for **your own `<Name>_<Role>` folder** under **Files**, select **Copy ABFS path**.
