@@ -133,7 +133,7 @@ Let's explore the differences between managed and external tables.
     ```sql
    %%sql
 
-   DESCRIBE FORMATTED <Lakehouse_Name>.<Name>_<Role>.external_products;
+   DESCRIBE FORMATTED external_products;
     ```
 
     In the results, view the **Location** property for the table, which should be a path to the OneLake storage for the lakehouse ending with **/Files/<Name>_<Role>/external_products** (you may need to widen the **Data type** column to see the full path).
