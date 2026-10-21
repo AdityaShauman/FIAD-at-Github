@@ -140,7 +140,6 @@ Now you're ready to run code that loads the data into a *dataframe*. Dataframes 
        ])
 
    df = spark.read.format("csv").schema(orderSchema).load("Files/orders/2019.csv")
-   display(df)
     ```
 
 8. Run the modified cell and review the output, which should look similar to this:
