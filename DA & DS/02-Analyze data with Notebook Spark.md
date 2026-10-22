@@ -86,6 +86,7 @@ Now you're ready to run code that loads the data into a *dataframe*. Dataframes 
    # df now is a Spark DataFrame containing CSV data from "Files/orders/2019.csv".
    display(df)
     ```
+    > **Important**: If encountering error, replace `display(df)` with `df.show(5, truncate=False)`. In this step the CSV file has no header row, so the first data row is used as column names, and `display()` fails with an **AnalysisException** because those names contain dots (such as `christy12@adventure-works.com`). `df.show()` does not have this problem, so you can still see the output.
 
     > **Tip**: You can hide the Lakehouse explorer panes on the left by using their **<<** icons. Doing so will help you focus on the notebook.
 
